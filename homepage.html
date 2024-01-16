@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Homepage</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400&display=swap">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        header {
+            background-color: darkblue;
+            color: #fff;
+            padding: 10px;
+            text-align: center;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        nav {
+            background-color: #2B7A78;
+            padding: 10px;
+            text-align: center;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 15px;
+        }
+
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            margin: 0 10px;
+        }
+
+        main {
+            padding: 20px;
+        }
+
+        body, html {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            overflow: hidden; /* Prevent scrolling */
+        }
+
+        #imagePlaceholder {
+            background-image: url('background.jpg'); /* Specify the background image URL */
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            color: #fff;
+            min-height: 100%;
+            min-width: 100%;
+        }
+
+
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Asset Management</h1>
+    </header>
+
+    <nav>
+        <a href="#" id="addPage">Add Page</a>
+        <a href="#" id="editPage">Edit Page</a>
+        <a href="#" id="deletePage">Delete Page</a>
+        <a href="#" id="viewPage">View Page</a>
+    </nav>
+
+    <main>
+        <img src="background.jpg" alt="Image Placeholder" id="imagePlaceholder">
+    </main>
+
+    <script>
+        // Add your JavaScript code here if needed
+        // For example, you can handle the click events for the navigation links
+        document.getElementById('addPage').addEventListener('click', function() {
+            // Handle Add Page click
+            alert('Add Page Clicked');
+        });
+
+        document.getElementById('editPage').addEventListener('click', function() {
+            // Handle Edit Page click
+            alert('Edit Page Clicked');
+        });
+
+        document.getElementById('deletePage').addEventListener('click', function() {
+            // Handle Delete Page click
+            alert('Delete Page Clicked');
+        });
+
+        document.getElementById('viewPage').addEventListener('click', function() {
+            // Handle View Page click
+            alert('View Page Clicked');
+        });
+    </script>
+</body>
+</html>
