@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Page</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400&display=swap">
+    <style>
+        body {
+            font-family: 'Montserrat', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        header {
+            background-color: darkblue;
+            color: #fff;
+            padding: 10px;
+            text-align: center;
+        }
+        nav {
+            background-color: #2B7A78;
+            padding: 10px;
+            text-align: center;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 15px;
+        }
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            margin: 0 10px;
+        }
+
+        form {
+            margin: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        input {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            box-sizing: border-box;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button.clear {
+            background-color: #f44336;
+        }
+
+        #searchForm {
+            margin-bottom: 20px;
+        }
+
+        #searchField {
+            width: 70%;
+            padding: 8px;
+            box-sizing: border-box;
+        }
+
+        #searchButton {
+            width: 28%;
+            margin-left: 2%;
+        }
+
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Asset Management</h1>
+    </header>
+
+    <nav>
+        <a href="add.html" id="addPage">Add Page</a>
+        <a href="edit.html" id="editPage">Edit Page</a>
+        <a href="delete.html" id="deletePage">Delete Page</a>
+        <a href="view.html" id="viewPage">View Page</a>
+    </nav>
+
+    <main>
+        <form id="searchForm">
+            <label for="searchField">Search by Asset ID:</label>
+            <input type="text" id="searchField" name="searchField" required>
+            <button type="button" id="searchButton">Search</button>
+        </form>
+
+        <form>
+            <label for="assetName">Asset Name</label>
+            <input type="text" id="assetName" name="assetName" required>
+
+            <label for="assetId">Asset ID</label>
+            <input type="text" id="assetId" name="assetId" required>
+
+            <label for="quantity">Quantity</label>
+            <input type="number" id="quantity" name="quantity" required>
+
+            <label for="price">Price</label>
+            <input type="number" id="price" name="price" required>
+
+            <label for="location">Location</label>
+            <input type="text" id="location" name="location" required>
+
+            <button type="button" class="clear">Clear</button>
+            <button type="submit">Submit</button>
+        </form>
+    </main>
+
+    <script>
+        // Add your JavaScript code here if needed
+    </script>
+</body>
+</html>
