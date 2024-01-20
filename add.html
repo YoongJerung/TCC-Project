@@ -32,7 +32,9 @@
         }
 
         form {
-            margin: 20px;
+            margin: 30px;
+            padding-top: 25px;
+            padding-bottom: 25px;
         }
 
         label {
@@ -41,7 +43,7 @@
         }
 
         input {
-            width: 100%;
+            width: 800px;
             padding: 8px;
             margin-bottom: 10px;
             box-sizing: border-box;
@@ -50,14 +52,16 @@
         button {
             background-color: #4CAF50;
             color: white;
-            padding: 10px 15px;
+            padding: 16px 32px;
             border: none;
-            border-radius: 5px;
+            border-radius: 15px;
             cursor: pointer;
+            font-size: 16px;
+            width: 120px;
         }
 
-        button.clear {
-            background-color: #f44336;
+        div.buttons {
+            margin-top: 32px;
         }
 
     </style>
@@ -69,19 +73,19 @@
     </header>
 
     <nav>
-        <a href="add.html" id="addPage">Add Page</a>
-        <a href="edit.html" id="editPage">Edit Page</a>
-        <a href="delete.html" id="deletePage">Delete Page</a>
-        <a href="view.html" id="viewPage">View Page</a>
+        <a href="/add-item" id="addPage">Add Page</a>
+        <a href="/edit-item" id="editPage">Edit Page</a>
+        <a href="/delete-item" id="deletePage">Delete Page</a>
+        <a href="/view-item" id="viewPage">View Page</a>
     </nav>
 
     <main>
         <form>
-            <label for="assetName">Asset Name</label>
-            <input type="text" id="assetName" name="assetName" required>
-
             <label for="assetId">Asset ID</label>
             <input type="text" id="assetId" name="assetId" required>
+
+            <label for="assetName">Asset Name</label>
+            <input type="text" id="assetName" name="assetName" required>
 
             <label for="quantity">Quantity</label>
             <input type="number" id="quantity" name="quantity" required>
@@ -92,13 +96,33 @@
             <label for="location">Location</label>
             <input type="text" id="location" name="location" required>
 
-            <button type="button" class="clear">Clear</button>
-            <button type="submit">Submit</button>
+            <div class="buttons">
+                <button type="button" onclick="addItem()">Add</button>
+            </div>
         </form>
     </main>
 
     <script>
         // Add your JavaScript code here if needed
+        function addItem() {
+            const assetId = document.getElementById("assetId").value;
+            const assetName = document.getElementById("assetName").value;
+            const quantity = document.getElementById("quantity").value;
+            const price = document.getElementById("price").value;
+            const location = document.getElementById("location").value;
+
+            fetch("/add", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/x-www-form-urlencoded",
+                },
+                body: `assetId=${assetId}&assetName=${assetName}&quantity=${quantity}&price=${price}&location=${location}`,
+            })
+            .then(response => response.json())
+            .then(data => alert(data))
+            .catch(error => console.error("Error:", error));
+        }
+
     </script>
 </body>
 </html>

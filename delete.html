@@ -128,7 +128,6 @@
             display: flex;
             gap: 20px;
         }
-
     </style>
 </head>
 <body>
@@ -138,49 +137,95 @@
     </header>
 
     <nav>
-        <a href="add.html" id="addPage">Add Page</a>
-        <a href="edit.html" id="editPage">Edit Page</a>
-        <a href="delete.html" id="deletePage">Delete Page</a>
-        <a href="view.html" id="viewPage">View Page</a>
+        <a href="/add-item" id="addPage">Add Page</a>
+        <a href="/edit-item" id="editPage">Edit Page</a>
+        <a href="/delete-item" id="deletePage">Delete Page</a>
+        <a href="/view-item" id="viewPage">View Page</a>
     </nav>
 
     <main>
         <form id="searchForm">
-            <input type="text" id="searchField" name="searchField" placeholder="Enter Asset ID" required>
-            <button type="button" id="searchButton">Search</button>
+            <input type="text" id="searchField" name="itemId" placeholder="Enter Asset ID" required>
+            <button type="button" id="searchButton" onclick="searchItem()">Search</button>
         </form>
 
         <div class="item-info">
             <div class="name-info">
-                <h3>Apple</h3>
+                <h3 id="asset-name">Apple</h3>
             </div>
             <div class="other-info">
                 <div class="id-info">
                     <h4>Asset ID</h4>
-                    <p>0123</p>
+                    <p id="asset-id">0123</p>
                 </div>
                 <div class="quantity-info">
                     <h4>Quantity</h4>
-                    <p>13</p>
+                    <p id="asset-quantity">13</p>
                 </div>
                 <div class="price-info">
                     <h4>Price</h4>
-                    <p>RM23.60</p>
+                    <p id="asset-price">RM23.60</p>
                 </div>
                 <div class="location-info">
                     <h4>Location</h4>
-                    <p>Kajang</p>
+                    <p id="asset-location">Kajang</p>
                 </div>
             </div>
         </div>
 
         <form class="delete-form">
-            <button type="button" class="clear">Delete</button>
+            <button type="button" class="clear" onclick="deleteItem()">Delete</button>
         </form>
     </main>
 
     <script>
         // Add your JavaScript code here if needed
+        function updateItemInfo(data) {
+            const assetId = document.getElementById("asset-id");
+            const assetName = document.getElementById("asset-name");
+            const quantity = document.getElementById("asset-quantity");
+            const price = document.getElementById("asset-price");
+            const location = document.getElementById("asset-location");
+
+            if(data["error"] === "Item not found") {
+                alert("Item ID not found.")
+                return;
+            }
+            assetId.innerText = data["assetId"];
+            assetName.innerText = data["assetName"];
+            quantity.innerText = data["quantity"];
+            price.innerText = data["price"];
+            location.innerText = data["location"];
+        }
+        function searchItem() {
+            const itemId = document.getElementById("searchField").value;
+
+            fetch("/search", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/x-www-form-urlencoded",
+                },
+                body: `itemId=${itemId}`,
+            })
+            .then(response => response.json())
+            .then(data => updateItemInfo(data))
+            .catch(error => console.error("Error:", error));
+        }
+
+        function deleteItem() {
+            const assetId = document.getElementById("asset-id");
+            const id = assetId.innerText;
+            fetch("/delete", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/x-www-form-urlencoded",
+                },
+                body: `itemId=${id}`,
+            })
+            .then(response => response.json())
+            .then(data => alert(data))
+            .catch(error => console.error("Error:", error));
+        }
     </script>
 </body>
 </html>

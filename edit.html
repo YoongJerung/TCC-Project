@@ -51,30 +51,61 @@
         button {
             background-color: #4CAF50;
             color: white;
-            padding: 10px 15px;
+            padding: 16px 32px;
             border: none;
-            border-radius: 5px;
+            border-radius: 15px;
             cursor: pointer;
-        }
-
-        button.clear {
-            background-color: #f44336;
+            font-size: 16px;
+            width: 120px;
         }
 
         #searchForm {
+            margin-top: 50px;
             margin-bottom: 20px;
+            border: 2px solid black;
+            padding: 10px;
+            width: fit-content;
+            border-radius: 20px;
         }
 
         #searchField {
-            width: 70%;
-            padding: 8px;
+            width: 500px;
+            padding: 14px;
             box-sizing: border-box;
+            border: none;
+            background-color: transparent;
+            margin-bottom: 0
+        }
+
+        input::placeholder {
+            font-size: 16px;
         }
 
         #searchButton {
-            width: 28%;
-            margin-left: 2%;
+            background-color: none;
         }
+
+        form.editForm {
+            margin: 30px;
+            padding-top: 25px;
+            padding-bottom: 25px;
+        }
+
+        h3 {
+            font-size: 24px;
+            margin: 0;
+            margin-bottom: 30px;
+        }
+
+        input {
+            width: 800px;
+        }
+
+        div.buttons {
+            margin-top: 32px;
+        }
+
+        
 
     </style>
 </head>
@@ -85,42 +116,84 @@
     </header>
 
     <nav>
-        <a href="add.html" id="addPage">Add Page</a>
-        <a href="edit.html" id="editPage">Edit Page</a>
-        <a href="delete.html" id="deletePage">Delete Page</a>
-        <a href="view.html" id="viewPage">View Page</a>
+        <a href="/add-item" id="addPage">Add Page</a>
+        <a href="/edit-item" id="editPage">Edit Page</a>
+        <a href="/delete-item" id="deletePage">Delete Page</a>
+        <a href="/view-item" id="viewPage">View Page</a>
     </nav>
 
     <main>
         <form id="searchForm">
-            <label for="searchField">Search by Asset ID:</label>
-            <input type="text" id="searchField" name="searchField" required>
-            <button type="button" id="searchButton">Search</button>
+            <input type="text" id="searchField" name="itemId" placeholder="Enter Asset ID" required>
+            <button type="button" id="searchButton" onclick="searchItem()">Search</button>
         </form>
 
-        <form>
-            <label for="assetName">Asset Name</label>
-            <input type="text" id="assetName" name="assetName" required>
+        <form class="editForm">
+            <div class="inputs">
+                <h3 id="asset-id">012</h3>
+                <label for="assetName">Asset Name</label>
+                <input type="text" id="assetName" name="assetName" required>
 
-            <label for="assetId">Asset ID</label>
-            <input type="text" id="assetId" name="assetId" required>
+                <label for="quantity">Quantity</label>
+                <input type="number" id="quantity" name="quantity" required>
 
-            <label for="quantity">Quantity</label>
-            <input type="number" id="quantity" name="quantity" required>
+                <label for="price">Price</label>
+                <input type="number" id="price" name="price" required>
 
-            <label for="price">Price</label>
-            <input type="number" id="price" name="price" required>
-
-            <label for="location">Location</label>
-            <input type="text" id="location" name="location" required>
-
-            <button type="button" class="clear">Clear</button>
-            <button type="submit">Submit</button>
+                <label for="location">Location</label>
+                <input type="text" id="location" name="location" required>
+            </div>
+            <div class="buttons">
+                <button type="button" onclick="editItem()">Modify</button>
+            </div>
         </form>
     </main>
 
     <script>
         // Add your JavaScript code here if needed
+        function updateItemInfo(data) {
+            const assetId = document.getElementById("asset-id");
+
+            if(data["error"] === "Item not found") {
+                alert("Item ID not found.")
+                return;
+            }
+            assetId.innerText = data["assetId"];
+        }
+        function searchItem() {
+            const itemId = document.getElementById("searchField").value;
+
+            fetch("/search", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/x-www-form-urlencoded",
+                },
+                body: `itemId=${itemId}`,
+            })
+            .then(response => response.json())
+            .then(data => updateItemInfo(data))
+            .catch(error => console.error("Error:", error));
+        }
+        function editItem() {
+            const assetId = document.getElementById("asset-id");
+            const id = assetId.innerText;
+            console.log(id)
+            const assetName = document.getElementById("assetName").value;
+            const quantity = document.getElementById("quantity").value;
+            const price = document.getElementById("price").value;
+            const location = document.getElementById("location").value;
+
+            fetch("/edit", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded",
+            },
+            body: `itemId=${id}&assetName=${assetName}&quantity=${quantity}&price=${price}&location=${location}`,
+            })
+            .then(response => response.json())
+            .then(data => alert(data))
+            .catch(error => console.error("Error:", error));
+        }
     </script>
 </body>
 </html>

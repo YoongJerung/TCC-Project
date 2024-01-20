@@ -35,7 +35,7 @@
         table {
             width: 80%;
             border-collapse: collapse;
-            margin-top: 50px;
+            margin-top: 20px;
             margin-bottom: 50px;
             position: relative;
             left: 50%;
@@ -52,7 +52,6 @@
         th {
             background-color: #e5e5e5;
         }
-
     </style>
 </head>
 <body>
@@ -62,10 +61,10 @@
     </header>
 
     <nav>
-        <a href="add.html" id="addPage">Add Page</a>
-        <a href="edit.html" id="editPage">Edit Page</a>
-        <a href="delete.html" id="deletePage">Delete Page</a>
-        <a href="view.html" id="viewPage">View Page</a>
+        <a href="/add-item" id="addPage">Add Page</a>
+        <a href="/edit-item" id="editPage">Edit Page</a>
+        <a href="/delete-item" id="deletePage">Delete Page</a>
+        <a href="/view-item" id="viewPage">View Page</a>
     </nav>
 
     <main>
@@ -79,48 +78,35 @@
                     <th>Location</th>
                 </tr>
             </thead>
-            <tbody>
-                <tr>
-                    <td>1</td>
-                    <td>Laptop</td>
-                    <td>5</td>
-                    <td>RM1000</td>
-                    <td>Kajang</td>
-                </tr>
-                <tr>
-                    <td>2</td>
-                    <td>Laptop</td>
-                    <td>5</td>
-                    <td>RM1000</td>
-                    <td>Kajang</td>
-                </tr>
-                <tr>
-                    <td>3</td>
-                    <td>Laptop</td>
-                    <td>5</td>
-                    <td>RM1000</td>
-                    <td>Kajang</td>
-                </tr>
-                <tr>
-                    <td>4</td>
-                    <td>Laptop</td>
-                    <td>5</td>
-                    <td>RM1000</td>
-                    <td>Kajang</td>
-                </tr>
-                <tr>
-                    <td>5</td>
-                    <td>Laptop</td>
-                    <td>5</td>
-                    <td>RM1000</td>
-                    <td>Kajang</td>
-                </tr>
-            </tbody>
+            <tbody id="itemsTable"></tbody>
         </table>
     </main>
 
     <script>
         // Add your JavaScript code here if needed
+        document.addEventListener('DOMContentLoaded', function () {
+            fetch('/get-items')
+            .then(response => response.json())
+            .then(data => displayItems(data))
+            .catch(error => console.error('Error:', error));
+        });
+
+        function displayItems(items) {
+            const itemsTableBody = document.getElementById('itemsTable');
+            itemsTableBody.innerHTML = '';
+
+            items.forEach(item => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                <td>${item.assetId}</td>
+                <td>${item.assetName}</td>
+                <td>${item.quantity}</td>
+                <td>${item.price}</td>
+                <td>${item.location}</td>
+                `;
+                itemsTableBody.appendChild(row);
+            });
+        }
     </script>
 </body>
 </html>
