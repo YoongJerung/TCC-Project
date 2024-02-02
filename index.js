@@ -52,7 +52,7 @@ const createTableQuery = `
   });
 
 app.get("/", (req, res) => {
-    res.sendFile(currentDir + "/home.html");
+    res.sendFile(currentDir + "/add.html");
 });
 
 app.get("/add-item", (req, res) => {
